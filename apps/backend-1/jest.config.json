@@ -1,0 +1,14 @@
+{
+  "roots": [
+    "__tests__/"
+  ],
+  "verbose": true,
+  "testEnvironment": "node",
+  "coveragePathIgnorePatterns": [
+    "/node_modules/"
+  ],
+  "clearMocks": true,
+  "extensionsToTreatAsEsm": [".ts"
+  ],
+  "preset": "ts-jest"
+}

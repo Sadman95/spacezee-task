@@ -19,11 +19,6 @@ This monorepo is set up using **Lerna** and **npm workspaces** to manage multipl
    npm install
    ```
 
-3. Bootstrap the monorepo and link dependencies:
-
-   ```bash
-   npx lerna link
-   ```
 
 ### **Running the Application**
 
