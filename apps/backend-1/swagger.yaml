@@ -1,0 +1,278 @@
+openapi: 3.0.0
+info:
+  title: 'Backend-1'
+  description: 'This is API specification for Backend-1'
+  contact:
+    name: Sadman Sakib
+    email: sakibsadman10@gmail.com
+  version: 1.0.0
+servers:
+  - description: backend-1
+    url: http://localhost:5000/api
+tags:
+  - name: User
+    description: User endpoints
+
+paths:
+  # User
+  /user:
+    post:
+      summary: Create User
+      description: Create new user
+      tags: [User]
+      requestBody:
+        content:
+          'application/json':
+            schema:
+              $ref: '#/components/schemas/CreateUserDTO'
+      responses:
+        200:
+          description: Users information
+          content:
+            'application/json':
+              schema:
+                type: object
+                properties:
+                  statusCode:
+                    allOf:
+                      - $ref: '#/components/schemas/StatusCodeSchema'
+                      - example: 200
+                  success:
+                    type: boolean
+                    example: true
+                  message:
+                    type: string
+                    example: User created successfully!
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/UserInfoDTO'
+                  
+        400:
+          $ref: '#/components/responses/400'
+        404:
+          $ref: '#/components/responses/404'
+        500:
+          $ref: '#/components/responses/500'
+  /user/{id}:
+    get:
+      summary: Get single user
+      description: Get single user
+      tags: [User]
+      parameters:
+        - $ref: '#/components/parameters/idPathParam'
+      responses:
+        200:
+          description: Get user by id
+          content:
+            'application/json':
+              schema:
+                type: object
+                properties:
+                  statusCode:
+                    allOf:
+                      - $ref: '#/components/schemas/StatusCodeSchema'
+                      - example: 200
+                  success:
+                    type: boolean
+                    example: true
+                  data:
+                    $ref: '#/components/schemas/UserInfoDTO'
+                  
+        404:
+          $ref: '#/components/responses/404'
+        500:
+          $ref: '#/components/responses/500'
+
+  
+components:
+  schemas:
+    StatusCodeSchema:
+      type: integer
+      format: int32
+    CreateUserDTO:
+      type: object
+      properties:
+        username:
+          type: string
+          example: johndoe
+        email:
+          type: string
+          format: email
+          example: johndoe@example.com
+        password:
+          type: string
+          format: password
+          example: Pass12345
+        bio:
+          type: string
+          example: Software Developer
+        interests:
+          type: array
+          minItems: 1
+          items:
+            type: string
+            example: 
+              - coding
+              - gaming
+                   
+          
+        
+      required: [username, email, password, bio, interests]
+    UserInfoDTO:
+      type: object
+      properties:
+        id:
+          type: string
+          example: '66b343434343434489djfdf'
+        username:
+          type: string
+          example: johndoe
+        email:
+          type: string
+          format: email
+          example: johndoe@example.com
+        bio:
+          type: string
+          example: Software Developer
+        interests:
+          type: array
+          minItems: 1
+          items:
+            type: string
+            example: 
+              - coding
+              - gaming
+
+  responses:
+    '400':
+      description: Bad request
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              statusCdoe:
+                type: integer
+                format: int32
+                example: 400
+              success:
+                type: boolean
+                example: false
+              message:
+                type: string
+                example: Bad request
+    '401':
+      description: Unauthorized
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              statusCdoe:
+                type: integer
+                format: int32
+                example: 401
+              success:
+                type: boolean
+                example: true
+              message:
+                type: string
+                example: You aren't authorized
+    '403':
+      description: Forbidden
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              statusCdoe:
+                type: integer
+                format: int32
+                example: 403
+              success:
+                type: boolean
+                example: true
+              message:
+                type: string
+                example: Forbidden access
+    '404':
+      description: Not found
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              statusCdoe:
+                type: integer
+                format: int32
+                example: 404
+              success:
+                type: boolean
+                example: false
+              message:
+                type: string
+                example: Resource not found
+    '406':
+      description: Not Acceptable
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              statusCdoe:
+                type: integer
+                format: int32
+                example: 406
+              success:
+                type: boolean
+                example: false
+              message:
+                type: string
+                example: Not Acceptable
+    '409':
+      description: Conflict
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              statusCdoe:
+                type: integer
+                format: int32
+                example: 409
+              success:
+                type: boolean
+                example: false
+              message:
+                type: string
+                example: Requested resource already exists
+    '500':
+      description: Internal server error
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              statusCdoe:
+                type: integer
+                format: int32
+                example: 500
+              success:
+                type: boolean
+                example: false
+              message:
+                type: string
+                example: Something went wrong
+    
+    
+  parameters:
+    idPathParam:
+      name: id
+      in: path
+      description: Item id
+      required: true
+      style: simple
+      explode: false
+      schema:
+        type: string
