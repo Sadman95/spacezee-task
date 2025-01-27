@@ -23,20 +23,22 @@ const consoleTransport = new transports.Console({level: 'http', format: myFormat
 // File rotate Transport
 const loggerTransport = (filename: string, level: LOG_LEVELS) => {
     return new DailyRotateFile({
-        level: level || LOG_LEVELS.ERROR,
-        format: myFormat,
-        filename: filename || path.join(
-        process.cwd(),
-        'logs',
-        'winston',  
-        'error_logs',
-        'backend-1-%DATE%-error.log'
-      ),
+      level: level || LOG_LEVELS.ERROR,
+      format: myFormat,
+      filename:
+        filename ||
+        path.join(
+          process.cwd(),
+          'logs',
+          'winston',
+          'error_logs',
+          'backend-2-%DATE%-error.log'
+        ),
       datePattern: 'YYYY-MM-DD-HH',
       zippedArchive: true,
       maxSize: '20m',
       maxFiles: '14d',
-    })
+    });
 }
 
 const errorFileTransport = loggerTransport(
@@ -45,7 +47,7 @@ const errorFileTransport = loggerTransport(
     'logs',
     'winston',
     'error_logs',
-    'backend-1-%DATE%-error.log'
+    'backend-2-%DATE%-error.log'
   ),
   LOG_LEVELS.ERROR
 );
@@ -56,7 +58,7 @@ const infoFileTransport = loggerTransport(
     'logs',
     'winston',
     'info_logs',
-    'backend-1-%DATE%-info.log'
+    'backend-2-%DATE%-info.log'
   ),
   LOG_LEVELS.INFO
 );

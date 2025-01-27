@@ -1,6 +1,6 @@
 import config from '@config/index';
-import { CreateUserDTO } from '@modules/user/user.interface';
 import axios from 'axios';
+import { Document } from 'mongodb';
 
 /**
  * Secure communication channel
@@ -15,7 +15,7 @@ export class SecureCommunication {
    */
   static async postToBackend2(endpoint: string, data: object): Promise<void> {
     await axios.post(`${config.backend_2_url}${endpoint}`, data, {
-      headers: { Authorization: `Bearer ${this.secretKey}` },
+      headers: { Authorization: `Bearer ${SecureCommunication.secretKey}` },
     });
   }
 
@@ -26,9 +26,9 @@ export class SecureCommunication {
    */
   static async fetchFromBackend2(
     endpoint: string
-  ): Promise<Partial<CreateUserDTO>> {
+  ): Promise<Document> {
     const response = await axios.get(`${config.backend_2_url}${endpoint}`, {
-      headers: { Authorization: `Bearer ${this.secretKey}` },
+      headers: { Authorization: `Bearer ${SecureCommunication.secretKey}` },
     });
     return response.data;
   }
