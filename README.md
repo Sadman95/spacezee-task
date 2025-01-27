@@ -56,6 +56,12 @@ spacezee-task/
 └── README.md               # Project documentation
 ```
 
+## **Swagger API Spec For Testing**
+- [Backend-1](http://localhost:5000/docs)
+- [Backend-2](http://localhost:5001/docs)
+
+
+
 ## **License**
 
 This project is licensed under the MIT License.
